@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Application\Actions\Home;
+namespace App\Actions\Home;
 
-use App\Application\Actions\Action;
+use App\Actions\Action;
 use Psr\Http\Message\ResponseInterface;
 
 class HomeAction extends Action

@@ -1,9 +1,6 @@
 <?php declare(strict_types=1);
 
-use App\Application\Actions\Home\HomeAction;
-use App\Controller\HomeController;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use App\Actions\Home\HomeAction;
 use Slim\Factory\AppFactory;
 
 $container = require __DIR__ . '/container.php';
