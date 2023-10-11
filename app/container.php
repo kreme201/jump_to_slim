@@ -3,6 +3,7 @@
 use DI\ContainerBuilder;
 
 $containerBuilder = new ContainerBuilder();
+$containerBuilder->useAttributes(true);
 $containerBuilder->addDefinitions([
 
 ]);
