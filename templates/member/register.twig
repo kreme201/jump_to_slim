@@ -1,0 +1,25 @@
+{% extends 'layout/base.twig' %}
+
+{% block content %}
+    <h5 class="my-3 border-bottom pb-2">회원 가입</h5>
+    <form method="post">
+        <div class="mb-3">
+            <label for="username">사용자 이름</label>
+            <input class="form-control" id="username" type="text" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="password">비밀번호</label>
+            <input class="form-control" id="password" type="password" name="password">
+        </div>
+
+        <div class="mb-3">
+            <label for="password_chk">비밀번호 확인</label>
+            <input class="form-control" id="password_chk" type="password" name="password_chk">
+        </div>
+        <div class="mb-3">
+            <label for="email">이메일</label>
+            <input class="form-control" id="email" type="email" name="email">
+        </div>
+        <button class="btn btn-primary" type="submit">생성하기</button>
+    </form>
+{% endblock %}

@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use App\Actions\Home\HomeAction;
+use App\Actions\Member\MemberRegisterAction;
 use App\Middlewares\TwigGlobalEnvMiddleware;
 use Slim\Factory\AppFactory;
 use Slim\Views\Twig;
@@ -19,5 +20,7 @@ $app->add(TwigGlobalEnvMiddleware::class);
 $app->getContainer()->set(Twig::class, $twig);
 
 $app->get('/', HomeAction::class);
+$app->get('/member/register', MemberRegisterAction::class);
+$app->post('/member/register', MemberRegisterAction::class);
 
 $app->run();
