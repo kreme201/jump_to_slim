@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Actions\Member;
@@ -19,6 +18,7 @@ class MemberRegisterAction extends Action
     {
         if ($this->request->getMethod() === 'POST') {
             $member = $this->memberRepository->create($this->request->getParsedBody());
+
             return $this->json($member->jsonSerialize());
         }
 

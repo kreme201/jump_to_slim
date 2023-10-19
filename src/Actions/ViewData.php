@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Actions;
@@ -16,7 +15,8 @@ class ViewData
         return $this->data;
     }
 
-    public function setAttribute(string $key, mixed $data) {
+    public function setAttribute(string $key, mixed $data)
+    {
         $this->data[$key] = $data;
     }
 }

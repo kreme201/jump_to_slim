@@ -1,8 +1,8 @@
-<?php declare(strict_types=1);
+<?php
+declare(strict_types=1);
 
 use App\Domain\Member\MemberRepository;
 use App\Infrastructures\Persistance\MemoryMemberRepository;
-use DI\Container;
 use DI\ContainerBuilder;
 
 use function DI\create;
