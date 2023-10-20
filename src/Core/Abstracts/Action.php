@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
-namespace App\Actions;
+namespace App\Core\Abstracts;
 
-use DI\Attribute\Inject;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Views\Twig;
@@ -13,8 +13,6 @@ abstract class Action
     protected ServerRequestInterface $request;
     protected ResponseInterface $response;
     protected array $args;
-    #[Inject]
-    protected ViewData $viewData;
 
     final public function __invoke(
         ServerRequestInterface $request,
@@ -46,8 +44,6 @@ abstract class Action
 
     protected function view(string $path, array $data = []): ResponseInterface
     {
-        $twig = Twig::fromRequest($this->request);
-
-        return $twig->render($this->response, $path, array_merge($this->viewData->getData(), $data));
+        return Twig::fromRequest($this->request)->render($this->response, $path, $data);
     }
 }
