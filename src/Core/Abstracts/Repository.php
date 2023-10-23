@@ -31,7 +31,7 @@ abstract class Repository
 
         $this->query($sql, $data);
 
-        return (int)$this->pdo->lastInsertId();
+        return (int) $this->pdo->lastInsertId();
     }
 
     protected function query(string $sql, array $params): PDOStatement

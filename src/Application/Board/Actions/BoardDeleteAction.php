@@ -18,7 +18,7 @@ class BoardDeleteAction extends Action
     protected function action(): ResponseInterface
     {
         if ($this->isPost()) {
-            $this->boardService->delete((int)$this->args['id'] ?? 0);
+            $this->boardService->delete((int) $this->args['id'] ?? 0);
 
             return $this->redirectByName('board_list');
         }
