@@ -6,6 +6,7 @@ namespace App\Core\Abstracts;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Routing\RouteContext;
 use Slim\Views\Twig;
 
 abstract class Action
@@ -28,6 +29,11 @@ abstract class Action
 
     abstract protected function action(): ResponseInterface;
 
+    protected function isPost(): bool
+    {
+        return $this->request->getMethod() === 'POST';
+    }
+
     protected function message(string $message): ResponseInterface
     {
         $this->response->getBody()->write($message);
@@ -45,5 +51,19 @@ abstract class Action
     protected function view(string $path, array $data = []): ResponseInterface
     {
         return Twig::fromRequest($this->request)->render($this->response, $path, $data);
+    }
+
+    protected function redirectByName(string $name, array $params = [], int $status = 302): ResponseInterface
+    {
+        $routeContext = RouteContext::fromRequest($this->request);
+        $routeParser = $routeContext->getRouteParser();
+        $url = $routeParser->urlFor($name, $params);
+
+        return $this->redirect($url, $status);
+    }
+
+    protected function redirect(string $path, int $status = 302): ResponseInterface
+    {
+        return $this->response->withHeader('Location', $path)->withStatus($status);
     }
 }

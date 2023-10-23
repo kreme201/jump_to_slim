@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+use App\Application\Board\Actions\BoardDeleteAction;
+use App\Application\Board\Actions\BoardFormAction;
 use App\Application\Board\Actions\BoardListAction;
 use App\Application\Board\Actions\BoardSingleAction;
 use Slim\Factory\AppFactory;
+use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Views\Twig;
 use Slim\Views\TwigMiddleware;
 
@@ -19,7 +22,15 @@ $twig = Twig::create(dirname(__DIR__).'/templates', ['cache' => false]);
 $app->add(TwigMiddleware::create($app, $twig));
 $app->getContainer()->set(Twig::class, $twig);
 
-$app->get('/', BoardListAction::class);
-$app->get('/{id}', BoardSingleAction::class);
+$app->redirect('/', '/board', 301);
+
+$app->group('/board', function (RouteCollectorProxyInterface $group) {
+    $group->get('', BoardListAction::class)->setName('board_list');
+    $group->get('/{id}', BoardSingleAction::class)->setName('board_single');
+    $group->map(['GET', 'POST'], '/register', BoardFormAction::class)->setName('board_register');
+    $group->map(['GET', 'POST'], '/{id}/edit', BoardFormAction::class)->setName('board_edit');
+    $group->map(['GET', 'POST'], '/{id}/delete', BoardDeleteAction::class)->setName('board_delete');
+});
+
 
 $app->run();

@@ -1,1 +1,4 @@
-<h2>Board Single</h2>
+<h2>Board Single :: {{ data.title }}</h2>
+<div>{{ data.content|nl2br }}</div>
+
+<a href="{{ url_for('board_list') }}">TO LIST</a>

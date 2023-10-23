@@ -8,7 +8,7 @@ use App\Application\Board\BoardService;
 use App\Core\Abstracts\Action;
 use Psr\Http\Message\ResponseInterface;
 
-class BoardListAction extends Action
+class BoardDeleteAction extends Action
 {
     public function __construct(
         private readonly BoardService $boardService,
@@ -17,8 +17,12 @@ class BoardListAction extends Action
 
     protected function action(): ResponseInterface
     {
-        $data = $this->boardService->search();
+        if ($this->isPost()) {
+            $this->boardService->delete((int)$this->args['id'] ?? 0);
 
-        return $this->view('board/list.twig', ['data' => $data]);
+            return $this->redirectByName('board_list');
+        }
+
+        return $this->view('board/delete.twig');
     }
 }

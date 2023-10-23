@@ -1,1 +1,13 @@
 <h2>Board List</h2>
+
+<a href="{{ url_for('board_register') }}">REGISTER</a>
+
+<ul>
+    {% for row in data %}
+        <li>
+            <a href="{{ url_for('board_single', { id: row.id }) }}">
+                {{ row.title }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

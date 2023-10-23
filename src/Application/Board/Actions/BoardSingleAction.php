@@ -20,7 +20,9 @@ class BoardSingleAction extends Action
     protected function action(): ResponseInterface
     {
         try {
-            return $this->json($this->boardService->get((int)$this->args['id'] ?? 0));
+            $data = $this->boardService->get((int)$this->args['id'] ?? 0);
+
+            return $this->view('board/single.twig', ['data' => $data]);
         } catch (Exception $e) {
             throw new HttpNotFoundException($this->request, $e->getMessage());
         }
