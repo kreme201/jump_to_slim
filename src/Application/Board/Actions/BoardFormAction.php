@@ -17,33 +17,35 @@ class BoardFormAction extends Action
 
     protected function action(): ResponseInterface
     {
-        $boardId = (int)$this->args['id'] ?? 0;
-
-        if (!empty($boardId)) {
-            $data = $this->boardService->get($boardId);
-        }
-        $params = (array)$this->request->getParsedBody();
+        $boardId = (int) ($this->args['id'] ?? 0);
+        $data = [];
 
         if ($this->isPost()) {
+            $data = (array) $this->request->getParsedBody();
+
             if (empty($params['title'])) {
-                $data['title'] = '';
                 $data['error'] = 'TITLE IS REQUIRED';
             } elseif (empty($params['content'])) {
-                $data['content'] = '';
                 $data['error'] = 'CONTENT IS REQUIRED';
             } else {
                 if ($boardId > 0) {
-                    $result = $this->boardService->update($boardId, $params['title'], $params['content']);
+                    $result = $this->boardService->update($boardId, $data['title'], $data['content']);
                 } else {
-                    $result = $this->boardService->create($params['title'], $params['content']);
+                    $result = $this->boardService->create($data['title'], $data['content']);
                 }
 
                 if ($result > 0) {
-                    return $this->redirectByName('board_single', ['id' => $result]);
+                    if ($boardId > 0) {
+                        return $this->redirectByName('board_single', ['id' => $result]);
+                    } else {
+                        return $this->redirectByName('board_list');
+                    }
                 }
 
                 $data['error'] = 'Unknown Error';
             }
+        } elseif (!empty($boardId)) {
+            $data = $this->boardService->get($boardId);
         }
 
         return $this->view('board/form.twig', $data);
