@@ -1,4 +1,6 @@
 <h2>Board Single :: {{ data.title }}</h2>
 <div>{{ data.content|nl2br }}</div>
 
+<a href="{{ url_for('board_edit', {id: data.id}) }}">EDIT</a>
+<a href="{{ url_for('board_delete', {id: data.id}) }}">DELETE</a>
 <a href="{{ url_for('board_list') }}">TO LIST</a>

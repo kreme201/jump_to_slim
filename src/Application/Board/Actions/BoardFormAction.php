@@ -23,9 +23,9 @@ class BoardFormAction extends Action
         if ($this->isPost()) {
             $data = (array) $this->request->getParsedBody();
 
-            if (empty($params['title'])) {
+            if (empty($data['title'])) {
                 $data['error'] = 'TITLE IS REQUIRED';
-            } elseif (empty($params['content'])) {
+            } elseif (empty($data['content'])) {
                 $data['error'] = 'CONTENT IS REQUIRED';
             } else {
                 if ($boardId > 0) {

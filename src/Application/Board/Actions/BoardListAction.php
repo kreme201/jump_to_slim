@@ -17,8 +17,12 @@ class BoardListAction extends Action
 
     protected function action(): ResponseInterface
     {
-        $data = $this->boardService->search();
+        $search = $this->request->getQueryParams()['search'] ?? '';
+        $data = $this->boardService->search($search);
 
-        return $this->view('board/list.twig', ['data' => $data]);
+        return $this->view('board/list.twig', [
+            'data'   => $data,
+            'search' => $search,
+        ]);
     }
 }

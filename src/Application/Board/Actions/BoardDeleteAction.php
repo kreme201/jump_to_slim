@@ -17,12 +17,16 @@ class BoardDeleteAction extends Action
 
     protected function action(): ResponseInterface
     {
+        $data = $this->boardService->get((int) $this->args['id'] ?? 0);
+
         if ($this->isPost()) {
-            $this->boardService->delete((int) $this->args['id'] ?? 0);
+            $this->boardService->delete($data['id']);
 
             return $this->redirectByName('board_list');
         }
 
-        return $this->view('board/delete.twig');
+        return $this->view('board/delete.twig', [
+            'data' => $data,
+        ]);
     }
 }

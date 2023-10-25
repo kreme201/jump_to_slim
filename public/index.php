@@ -26,8 +26,8 @@ $app->redirect('/', '/board', 301);
 
 $app->group('/board', function (RouteCollectorProxyInterface $group) {
     $group->get('', BoardListAction::class)->setName('board_list');
-    $group->get('/{id}', BoardSingleAction::class)->setName('board_single');
     $group->map(['GET', 'POST'], '/register', BoardFormAction::class)->setName('board_register');
+    $group->get('/{id}', BoardSingleAction::class)->setName('board_single');
     $group->map(['GET', 'POST'], '/{id}/edit', BoardFormAction::class)->setName('board_edit');
     $group->map(['GET', 'POST'], '/{id}/delete', BoardDeleteAction::class)->setName('board_delete');
 });

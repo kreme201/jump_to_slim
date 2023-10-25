@@ -12,7 +12,7 @@ class BoardRepository extends Repository
 
     public function search(string $search = ''): false|array
     {
-        return $this->getResult("SELECT * FROM {$this->table} WHERE title LIKE :search", [
+        return $this->getResult("SELECT * FROM {$this->table} WHERE title LIKE :search OR content LIKE :search", [
             'search' => "%{$search}%",
         ]);
     }

@@ -2,6 +2,11 @@
 
 <a href="{{ url_for('board_register') }}">REGISTER</a>
 
+<form method="get">
+    <input type="search" name="search" value="{{ search }}"/>
+    <input type="submit" value="SEARCH"/>
+</form>
+
 <ul>
     {% for row in data %}
         <li>
