@@ -16,9 +16,4 @@ class BoardRepository extends Repository
             'search' => "%{$search}%",
         ]);
     }
-
-    public function get(int $id): false|array
-    {
-        return $this->getRow("SELECT * FROM {$this->table} WHERE id = :id", ['id' => $id]);
-    }
 }

@@ -23,11 +23,15 @@ abstract class Repository
             return $key !== $this->primaryKey;
         }, ARRAY_FILTER_USE_KEY);
 
-        $columns = implode(', ', array_keys($data));
+        $columns = implode(', ', array_map(function ($column) {
+            return "`{$column}`";
+        }, array_keys($data)));
+
         $values = implode(', ', array_map(function ($column) {
             return ":{$column}";
         }, array_keys($data)));
-        $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$values})";
+        
+        $sql = "INSERT INTO `{$this->table}` ({$columns}) VALUES ({$values})";
 
         $this->query($sql, $data);
 
@@ -49,7 +53,7 @@ abstract class Repository
         }, ARRAY_FILTER_USE_KEY);
 
         $columns = implode(', ', array_map(function ($columns) {
-            return "{$columns} = :{$columns}";
+            return "`{$columns}` = :{$columns}";
         }, array_keys($data)));
         $sql = "UPDATE `{$this->table}` SET {$columns} WHERE `{$this->primaryKey}` = :primaryKey";
         $params['primaryKey'] = $id;
@@ -61,18 +65,25 @@ abstract class Repository
 
     public function delete(int $id): void
     {
-        $sql = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = :id";
+        $sql = "DELETE FROM `{$this->table}` WHERE `{$this->primaryKey}` = :id";
 
         $this->query($sql, ['id' => $id]);
     }
 
-    protected function getResult(string $sql, array $params = []): false|array
+    public function get(int $id): false|array
     {
-        return $this->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->getRow("SELECT * FROM `{$this->table}` WHERE `{$this->primaryKey}` = :id", [
+            'id' => $id,
+        ]);
     }
 
     protected function getRow(string $sql, array $params = []): false|array
     {
         return $this->query($sql, $params)->fetch(PDO::FETCH_ASSOC);
+    }
+
+    protected function getResult(string $sql, array $params = []): false|array
+    {
+        return $this->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
 }
