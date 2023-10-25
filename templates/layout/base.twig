@@ -2,32 +2,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/assets/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-    <title>QNA Board</title>
+    <title>Jump To Slim</title>
     {% block style %}{% endblock %}
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#/">QNA Board</a>
-        <button
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-            class="navbar-toggler"
-            data-bs-target="#navbarSupportedContent"
-            data-bs-toggle="collapse"
-            type="button"
-        >
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#/user-create">회원가입</a></li>
-                <li class="nav-item"><a class="nav-link" href="#/user-login">로그인</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <div class="container">
     {% block content %}{% endblock %}

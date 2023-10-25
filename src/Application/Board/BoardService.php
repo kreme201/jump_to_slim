@@ -18,6 +18,8 @@ class BoardService
         return $this->boardRepository->insert([
             'title'   => $title,
             'content' => $content,
+            'created' => date('Y-m-d H:i:s'),
+            'updated' => date('Y-m-d H:i:s'),
         ]);
     }
 
@@ -26,6 +28,7 @@ class BoardService
         return $this->boardRepository->update($id, [
             'title'   => $title,
             'content' => $content,
+            'updated' => date('Y-m-d H:i:s'),
         ]);
     }
 
