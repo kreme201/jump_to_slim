@@ -6,6 +6,7 @@ use App\Application\Board\Actions\BoardDeleteAction;
 use App\Application\Board\Actions\BoardFormAction;
 use App\Application\Board\Actions\BoardListAction;
 use App\Application\Board\Actions\BoardSingleAction;
+use App\Application\Member\Actions\MemberFormAction;
 use Slim\Factory\AppFactory;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Views\Twig;
@@ -30,6 +31,10 @@ $app->group('/board', function (RouteCollectorProxyInterface $group) {
     $group->get('/{id}', BoardSingleAction::class)->setName('board_single');
     $group->map(['GET', 'POST'], '/{id}/edit', BoardFormAction::class)->setName('board_edit');
     $group->map(['GET', 'POST'], '/{id}/delete', BoardDeleteAction::class)->setName('board_delete');
+});
+
+$app->group('/member', function (RouteCollectorProxyInterface $group) {
+    $group->map(['GET', 'POST'], '/register', MemberFormAction::class)->setName('member_register');
 });
 
 
