@@ -17,6 +17,8 @@
         </form>
     </div>
 
+    <p>TOTAL :: {{ pagination.total }}</p>
+
     <table class="table">
         <thead>
         <tr class="table-dark">
@@ -43,10 +45,6 @@
         {% endif %}
         </tbody>
     </table>
-
-
-    <p>TOTAL :: {{ pagination.total }}</p>
-    <p>TOTAL PAGES :: {{ pagination.totalPages }}</p>
 
     {% if pagination.currentPage > 1 %}
         <a href="{{ url_for('board_list') }}?page={{ pagination.getPrev() }}">PREV</a>
