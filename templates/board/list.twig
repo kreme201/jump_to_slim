@@ -29,7 +29,7 @@
         {% if data %}
             {% for idx, row in data %}
                 <tr>
-                    <td>{{ idx }}</td>
+                    <td>{{ row.id }}</td>
                     <td>
                         <a href="{{ url_for('board_single', { id: row.id }) }}">{{ row.title }}</a>
                     </td>
@@ -43,4 +43,25 @@
         {% endif %}
         </tbody>
     </table>
+
+
+    <p>TOTAL :: {{ pagination.total }}</p>
+    <p>TOTAL PAGES :: {{ pagination.totalPages }}</p>
+
+    {% if pagination.currentPage > 1 %}
+        <a href="{{ url_for('board_list') }}?page={{ pagination.getPrev() }}">PREV</a>
+    {% endif %}
+
+    {% for p in pagination.getPagination() %}
+        {% if p == pagination.currentPage %}
+            <span>{{ p }}</span>
+        {% else %}
+            <a href="{{ url_for('board_list') }}?page={{ p }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+
+
+    {% if pagination.currentPage < pagination.getTotalPages() %}
+        <a href="{{ url_for('board_list') }}?page={{ pagination.getNext() }}">NEXT</a>
+    {% endif %}
 {% endblock %}

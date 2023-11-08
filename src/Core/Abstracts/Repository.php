@@ -30,7 +30,7 @@ abstract class Repository
         $values = implode(', ', array_map(function ($column) {
             return ":{$column}";
         }, array_keys($data)));
-        
+
         $sql = "INSERT INTO `{$this->table}` ({$columns}) VALUES ({$values})";
 
         $this->query($sql, $data);
@@ -85,5 +85,10 @@ abstract class Repository
     protected function getResult(string $sql, array $params = []): false|array
     {
         return $this->query($sql, $params)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    protected function getValue(string $sql, array $params = []): mixed
+    {
+        return $this->query($sql, $params)->fetchColumn(0);
     }
 }

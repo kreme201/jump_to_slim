@@ -37,15 +37,20 @@ class BoardService
         $this->boardRepository->delete($id);
     }
 
-    public function search(string $search = ''): array
+    public function search(string $search = '', int $rpp = 10, int $page = 1): array
     {
-        $result = $this->boardRepository->search($search);
+        $result = $this->boardRepository->search($search, $rpp, max(0, $page - 1) * $rpp);
 
         if ($result === false) {
             return [];
         }
 
         return $result;
+    }
+
+    public function count(string $search = ''): int
+    {
+        return $this->boardRepository->count($search);
     }
 
     public function get(int $id)
