@@ -23,6 +23,17 @@ class MemberService
         return $this->memberRepository->get($id);
     }
 
+    public function find_by_email(string $email): array
+    {
+        $result = $this->memberRepository->find_by_email($email);
+
+        if ($result) {
+            return $result;
+        }
+
+        return [];
+    }
+
     public function add(string $email, string $name, string $password): int
     {
         return $this->memberRepository->insert([

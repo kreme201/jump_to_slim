@@ -7,6 +7,10 @@ use App\Application\Board\Actions\BoardFormAction;
 use App\Application\Board\Actions\BoardListAction;
 use App\Application\Board\Actions\BoardSingleAction;
 use App\Application\Member\Actions\MemberFormAction;
+use App\Application\Member\Actions\MemberLoginAction;
+use App\Application\Member\Actions\MemberLogoutAction;
+use App\Middlewares\SessionMiddleware;
+use App\Middlewares\TwigVariableMiddleware;
 use Slim\Factory\AppFactory;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 use Slim\Views\Twig;
@@ -18,10 +22,13 @@ $app = AppFactory::createFromContainer($container);
 
 // Create Twig
 $twig = Twig::create(dirname(__DIR__).'/templates', ['cache' => false]);
+$app->getContainer()->set(Twig::class, $twig);
 
 // Add Twig-View Middleware
 $app->add(TwigMiddleware::create($app, $twig));
-$app->getContainer()->set(Twig::class, $twig);
+
+$app->add(TwigVariableMiddleware::class);
+$app->add(SessionMiddleware::class);
 
 $app->redirect('/', '/board', 301);
 
@@ -35,6 +42,8 @@ $app->group('/board', function (RouteCollectorProxyInterface $group) {
 
 $app->group('/member', function (RouteCollectorProxyInterface $group) {
     $group->map(['GET', 'POST'], '/register', MemberFormAction::class)->setName('member_register');
+    $group->map(['GET', 'POST'], '/login', MemberLoginAction::class)->setName('member_login');
+    $group->get('/logout', MemberLogoutAction::class)->setName('member_logout');
 });
 
 

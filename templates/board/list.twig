@@ -3,6 +3,8 @@
 {% block content %}
     <h2 class="border-bottom py-2">Board List</h2>
 
+    <p>USER_ID :: {{ user_id }}</p>
+
     <div class="row my-3">
         <div class="col-6">
             <a href="{{ url_for('board_register') }}" class="btn btn-primary">질문 등록하기</a>
