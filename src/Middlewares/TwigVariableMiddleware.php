@@ -12,8 +12,9 @@ use Slim\Views\Twig;
 
 class TwigVariableMiddleware implements MiddlewareInterface
 {
-    public function __construct(private Twig $twig)
-    {
+    public function __construct(
+        private readonly Twig $twig,
+    ) {
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
