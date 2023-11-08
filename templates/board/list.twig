@@ -23,6 +23,8 @@
         <thead>
         <tr class="table-dark">
             <th>번호</th>
+            <th>ID</th>
+            <th>IDX</th>
             <th>제목</th>
             <th>작성일시</th>
         </tr>
@@ -31,7 +33,9 @@
         {% if data %}
             {% for idx, row in data %}
                 <tr>
+                    <td>{{ pagination.total - ((pagination.currentPage - 1) * pagination.rpp) - idx }}</td>
                     <td>{{ row.id }}</td>
+                    <td>{{ idx }}</td>
                     <td>
                         <a href="{{ url_for('board_single', { id: row.id }) }}">{{ row.title }}</a>
                     </td>
