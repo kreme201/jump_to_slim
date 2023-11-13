@@ -26,6 +26,7 @@
             <th>ID</th>
             <th>IDX</th>
             <th>제목</th>
+            <th>AUTHOR</th>
             <th>작성일시</th>
         </tr>
         </thead>
@@ -39,6 +40,7 @@
                     <td>
                         <a href="{{ url_for('board_single', { id: row.id }) }}">{{ row.title }}</a>
                     </td>
+                    <td>{{ row.name }}</td>
                     <td>{{ row.created|date('Y-m-d') }}</td>
                 </tr>
             {% endfor %}
@@ -66,4 +68,8 @@
     {% if pagination.currentPage < pagination.getTotalPages() %}
         <a href="{{ url_for('board_list') }}?page={{ pagination.getNext() }}">NEXT</a>
     {% endif %}
+{% endblock %}
+
+{% block script %}
+    <script>console.log('test');</script>
 {% endblock %}

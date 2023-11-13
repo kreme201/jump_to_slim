@@ -46,6 +46,10 @@ class BoardFormAction extends Action
             }
         } elseif (!empty($boardId)) {
             $data = $this->boardService->get($boardId);
+
+            if ($data["author"] !== $_SESSION["user_id"]) {
+                return $this->response->withStatus(404);
+            }
         }
 
         return $this->view('board/form.twig', $data);

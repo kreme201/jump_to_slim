@@ -16,6 +16,7 @@ class BoardService
     public function create(string $title, string $content): int
     {
         return $this->boardRepository->insert([
+            'author'  => $_SESSION['user_id'],
             'title'   => $title,
             'content' => $content,
             'created' => date('Y-m-d H:i:s'),

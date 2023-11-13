@@ -19,6 +19,10 @@ class BoardDeleteAction extends Action
     {
         $data = $this->boardService->get((int) $this->args['id'] ?? 0);
 
+        if ($data["author"] !== $_SESSION["user_id"]) {
+            return $this->response->withStatus(404);
+        }
+
         if ($this->isPost()) {
             $this->boardService->delete($data['id']);
 

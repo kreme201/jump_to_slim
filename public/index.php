@@ -9,6 +9,7 @@ use App\Application\Board\Actions\BoardSingleAction;
 use App\Application\Member\Actions\MemberFormAction;
 use App\Application\Member\Actions\MemberLoginAction;
 use App\Application\Member\Actions\MemberLogoutAction;
+use App\Middlewares\LoginRequiredMiddleware;
 use App\Middlewares\SessionMiddleware;
 use App\Middlewares\TwigVariableMiddleware;
 use Slim\Factory\AppFactory;
@@ -34,10 +35,13 @@ $app->redirect('/', '/board', 301);
 
 $app->group('/board', function (RouteCollectorProxyInterface $group) {
     $group->get('', BoardListAction::class)->setName('board_list');
-    $group->map(['GET', 'POST'], '/register', BoardFormAction::class)->setName('board_register');
+    $group->map(['GET', 'POST'], '/register',
+        BoardFormAction::class)->setName('board_register')->add(LoginRequiredMiddleware::class);
     $group->get('/{id}', BoardSingleAction::class)->setName('board_single');
-    $group->map(['GET', 'POST'], '/{id}/edit', BoardFormAction::class)->setName('board_edit');
-    $group->map(['GET', 'POST'], '/{id}/delete', BoardDeleteAction::class)->setName('board_delete');
+    $group->map(['GET', 'POST'], '/{id}/edit',
+        BoardFormAction::class)->setName('board_edit')->add(LoginRequiredMiddleware::class);
+    $group->map(['GET', 'POST'], '/{id}/delete',
+        BoardDeleteAction::class)->setName('board_delete')->add(LoginRequiredMiddleware::class);
 });
 
 $app->group('/member', function (RouteCollectorProxyInterface $group) {
